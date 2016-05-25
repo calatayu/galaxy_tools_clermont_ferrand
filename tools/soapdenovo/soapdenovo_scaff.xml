@@ -18,9 +18,9 @@
             SOAPdenovo-63mer scaff
         #else
             SOAPdenovo-127mer scaff
-        #endif
+        #end if
 
-
+            -N $genomeSize
 ]]>
     </command>
 
@@ -29,6 +29,8 @@
             <option value="63" selected="True">63</option>
             <option value="127">127</option>
         </param>
+
+        <param name="genomeSize" type="integer" value="0"  label="Genome size for statistics" help="-N"/>
     </inputs>
 
     <outputs>
