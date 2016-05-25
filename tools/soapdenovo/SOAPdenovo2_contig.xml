@@ -88,4 +88,6 @@ contig -g InputGraph [-R] [-M mergeLevel -D EdgeCovCutoff] [-s readsInfoFile -m 
       -E (optional)    merge clean bubble before iterate, works only if -M is set when using multi-kmer, [NO]
 
     ]]></help>
+    
+    <expand macro="citations"/>
 </tool>
