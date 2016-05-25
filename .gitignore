@@ -1,0 +1,5 @@
+.Python
+.venv/
+dep_install.sh
+env.sh
+venv/
