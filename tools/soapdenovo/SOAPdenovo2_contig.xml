@@ -1,7 +1,9 @@
 <tool id="SOAPdenovo2_contig" name="SOAPdenovo2_contig" version="0.1.0">
     <description>SOAPdenovo is a novel short-read assembly method that can build a de novo draft assembly for the human-sized genomes. The program is specially designed to assemble Illumina GA short reads.</description>
-    <requirements>
-    </requirements>
+    <macros>
+        <import>soapdenovo_macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
     <stdio>
         <exit_code range="1:" />
     </stdio>
