@@ -1,0 +1,45 @@
+<tool id="soapdenovo_scaff" name="Scaff" version="0.1.0">
+
+    <description>with SOAPdenovo</description>
+
+    <macros>
+        <import>soapdenovo_macros.xml</import>
+    </macros>
+
+    <expand macro="requirements"/>
+
+    <stdio></stdio>
+
+    <version_command></version_command>
+
+    <command>
+<![CDATA[        
+        #if $max_kmer_size == "63"
+            SOAPdenovo-63mer scaff
+        #else
+            SOAPdenovo-127mer scaff
+        #endif
+
+
+]]>
+    </command>
+
+    <inputs>
+        <param name="max_kmer_size" label="Maximal kmer size" type="select" help="">
+            <option value="63" selected="True">63</option>
+            <option value="127">127</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data format="txt" name="config_file" 
+            label="${tool.name} on ${on_string}: Configuration file"/>
+    </outputs>
+
+    <tests>
+    </tests>
+
+    <expand macro="help"/>
+
+    <expand macro="citations"/>
+</tool>
