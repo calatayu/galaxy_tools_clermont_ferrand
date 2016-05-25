@@ -1,0 +1,81 @@
+<tool id="soapdenovo2_sparse_pregraph" name="SOAPdenovo2_sparse_pregraph" version="0.1.0">
+	<description>
+	SOAPdenovo2 is a novel short-read assembly method that can build a de novo draft assembly for the human-sized genomes.
+	sparse_pregraph
+	</description>
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+	./$version sparse_pregraph
+		-s $config_file
+		-K $kmer
+		-g $maxKmerEdgeLength
+		-z $genomeSize
+		-d $kmerFreqCutoff
+		-e $kmerEdgeFreqCutoff
+		#if $extraInfo
+			-R
+		#end if
+		-r $runMode
+		-o $outputGraph
+    ]]></command>
+    <inputs>
+	<conditional name="settings">
+		<param name="version" type="select" label="Version" help="">
+			<option value="SOAPdenovo-63mer" selected="true">SOAPdenovo2-63mer</option>
+		        <option value="SOAPdenovo-127mer">SOAPdenovo2-127mer</option>
+		</param>
+		<when value="SOAPdenovo-63mer">
+			<param name="kmer" type="integer" label="kmer" value="23" min="13" max="63" help="(-K kmer)"/>
+		</when>
+		<when value="SOAPdenovo-127mer">
+			<param name="kmer" type="integer" label="kmer" value="23" min="13" max="127" help="(-K kmer)"/>
+		</when>
+	</conditional>
+	<param name="config_file" type="data" format="txt" label="Configuration file" help="(-s configFile)"/>
+	<param name="genomeSize" type="integer" label="genomeSize" help="(-z genomeSize)"/>
+	<param name="outputGraph" type="txt" label="Output graph path" help="(-o outputGraph)"/>
+	<param name="maxKmerEdgeLength" type="integer" label="maxKmerEdgeLength" value="15" min="1" max="25" optional="TRUE" help="(-g maxKmerEdgeLength)"/>
+	<param name="kmerFreqCutoff" type="integer" label="kmerFreqCutoff" value="1" optional="TRUE" help="(-d kmerFreqCutoff)"/>
+	<param name="kmerEdgeFreqCutoff" type="integer" label="kmerEdgeFreqCutoff" optional="TRUE" value="1" help="(-e kmerEdgeFreqCutoff)"/>
+  	<param name="extraInfo" type="boolean" label="Output extra information" truevalue="-R" falsevalue="" help="(-R)"/>
+	<param name="runMode" type="integer" label="runMode" value="0" help="(-r runMode)"/>
+    </inputs>
+    <outputs>
+	<data format="tabular,tsv,txt" name="kmerFreq" label="kmerFreq file from ${tool.name} on ${on_string}" />
+	<data format="tabular,tsv,txt" name="edge" label="edge file from ${tool.name} on ${on_string}" />
+	<data format="tabular,tsv,txt" name="markOnEdge" label="markOnEdge file from ${tool.name} on ${on_string}" />
+	<data format="tabular,tsv,txt" name="path" label="path file from ${tool.name} on ${on_string}" />
+	<data format="tabular,tsv,txt" name="preArc" label="preArc file from ${tool.name} on ${on_string}" />
+	<data format="tabular,tsv,txt" name="vertex" label="vertex file from ${tool.name} on ${on_string}" />
+	<data format="tabular,tsv,txt" name="preGraphBasic" label="preGraphBasic file from ${tool.name} on ${on_string}" />
+
+    </outputs>
+    <tests>
+        <test>
+            <param name="version" value="SOAPdenovo-63mer"/>
+	    <param name="kmer" value="63"/>
+	    <param name="config_file" value=""/>
+	    <param name="genomeSize" value=""/>
+            <param name="outputGraph" value=""/>
+	    <param name="maxKmerEdgeLength" value=""/>
+	    <param name="kmerFreqCutoff" value=""/>
+	    <param name="kmerEdgeFreqCutoff" value=""/>
+	    <param name="extraInfo" value=""/>
+	    <param name="runMode" value=""/>
+	    <output name="kmerFreq" file=""/>
+	    <output name="edge" file=""/>
+	    <output name="markOnEdge" file=""/>
+	    <output name="path" file=""/>
+	    <output name="preArc" file=""/>
+	    <output name="vertex" file=""/>
+	    <output name="preGraphBasic" file=""/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>
