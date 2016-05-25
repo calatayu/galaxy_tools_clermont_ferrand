@@ -1,0 +1,35 @@
+<tool id="soapdenovo_generate_config_file" name="Generate configuration file" version="0.1.0">
+
+    <description>for SOAPdenovo</description>
+
+    <macros>
+        <import>soapdenovo_macros.xml</import>
+    </macros>
+
+    <expand macro="requirements"/>
+
+    <stdio></stdio>
+
+    <version_command></version_command>
+
+    <command>
+<![CDATA[        
+        python $__tool_directory__/generate_config_file.py
+]]>
+    </command>
+
+    <inputs>
+        <param name="max_rd_len" type="integer" value="100" label="Maximal read length" help="(max_rd_len)"/>
+    </inputs>
+
+    <outputs>
+        <data format="txt" name="config_file" label="${tool.name} on ${on_string}: Configuration file"/>
+    </outputs>
+
+    <tests>
+    </tests>
+
+    <expand macro="help"/>
+
+    <expand macro="citations"/>
+</tool>
