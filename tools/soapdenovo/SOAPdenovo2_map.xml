@@ -1,0 +1,72 @@
+<tool id="SOAPdenovo2" name="map for SOAPdenovo" version="0.x.x">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+
+	SOAPdenovo map 
+		-s $config_file
+		-g $graph_prefix
+		-p $nb_cpu
+		1>$output4
+		2>$output5
+
+    ]]></command>
+    <inputs>
+        <param type="data" name="config_file" format="config" label="choose the config file"/>
+        <param type="data" name="input2" format="contig" label=".contig file made by Contig" from_work_dir="${graph_prefix}.contig"/>
+        <param type="data" name="input3" format="Arc" label="..." from_work_dir="${graph_prefix}.Arc"/>
+        <param type="data" name="input4" format="updated.edge" label="..." from_work_dir="${graph_prefix}.updated.edge"/>
+        <param type="data" name="input5" format="ContigIndex" label="..." from_work_dir="${graph_prefix}.ContigIndex"/>
+
+	<param name="graph_prefix" type="text" label="..."/>
+	<param name="nb_cpu" type="integer" value="8" label="Number of cpu" optional="True" help="Number of CPU"/>
+
+
+    </inputs>
+    <outputs>
+        <data name="output1" format="text" label="${tool.name} on ${on_string} : Information for each clone library" from_work_dir="${graph_prefix}.peGrads"/>
+        <data name="output2" format="text" label="${tool.name} on ${on_string} : Reads' locations on contigs" from_work_dir="${graph_prefix}.readOnContig"/>
+        <data name="output3" format="text" label="${tool.name} on ${on_string} : includes reads that could be located in gaps between contigs" from_work_dir="${graph_prefix}.readInGap"/>
+        <data name="output4" format="log"/>
+        <data name="output5" format="err"/>
+
+
+    </outputs>
+
+    <tests>
+
+	<test>
+
+	   <param name="config_file" value=""/>
+	   <param name="graph_prefix" value=""/>
+	   <param name="nb_cpu" value=""/>
+
+	   <output name="output1" file=""/>
+	   <output name="output2" file=""/>
+	   <output name="output3" file=""/>
+	   <output name="output4" file=""/>
+	   <output name="output5" file=""/>
+
+	</test>
+
+    </tests>
+
+    <help><![CDATA[
+
+	**What it does**
+	Soapdenovo2 map prepares contigs for scaffolding
+
+	For more information, check the `user manual
+	https://github.com/aquaskyline/SOAPdenovo2
+
+    ]]></help>
+
+    <citations>
+	<citation> type="doi">10.1186/2047-217X-1-18 </citation>
+    </citations>
+
+
+</tool>
