@@ -1,0 +1,9 @@
+categories: 
+  - Assembly
+  - Fasta Manipulation
+  - Fastq Manipulation
+description: SOAPdenovo is a novel short-read assembly method that can build a de novo draft assembly for the human-sized genome
+homepage_url: https://github.com/aquaskyline/SOAPdenovo2
+name: soapdenovo
+owner: bebatut
+remote_repository_url: https://github.com/bebatut/galaxy_tools_clermont_ferrand/tree/master/tools/soapdenovo
