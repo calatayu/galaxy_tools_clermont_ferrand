@@ -1,0 +1,94 @@
+<tool id="soapdenovo_contig" name="Contig" version="0.1.0">
+    <description>with SOAPdenovo</description>
+
+    <macros>
+        <import>soapdenovo_macros.xml</import>
+    </macros>
+
+    <expand macro="requirements"/>
+
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+
+    <command><![CDATA[
+        cp $reads_info_file reads_info_file
+
+        & 
+
+		    #if $select_tool==127
+          SOAPdenovo-127mer contig
+        #else 
+          SOAPdenovo-63mer contig
+        #end if
+
+          -g "$input1" 
+
+          $resolve_repeats 
+
+          #if $merge_level
+            -M $merge_level
+          #end if
+
+          #if $cov_cutoff
+            -D $cov_cutoff
+          #end if
+
+          #if $arc_weight
+            -e $arc_weight
+          #end if
+
+          #if $define_multi_kmer == "yes":
+            -m $define_multi_kmer.max_kmer
+            -s reads_info_file
+            -p \${GALAXY_SLOTS:-4}
+            -E $define_multi_kmer.merge_bubble
+          #end if
+        
+    ]]></command>
+
+    <inputs>
+      <param type="data" name="input1" format="" />
+
+      <param name="select_tool" type="select" label="Select tool" help="Select kmer length algorithm optimization">
+  			<option value="127" selected="true">SOAPdenovo-127mer</option>
+  			<option value="63">SOAPdenovo-63mer</option>
+  		</param>
+
+  		<param name="resolve_repeats" type="boolean" label="Resolve repeats" truevalue="-R" falsevalue="" help="Resolve repeats using information generated in pregraph step, works only if -R is set in pregraph step too (-R)" />
+
+  		<param name="merge_level" type="integer" min="0" max="3" value="1" label="Merge level" optional="True" help="the strength of merging similar sequences during contiging, between 0 and 3" />
+
+  		<param name="cov_cutoff" type="integer" value="1" label="Edge coverage cutoff" optional="True" help="edges shorter than (2*K+1) with coverage no larger than EdgeCovCutoff will be deleted" />
+
+  		<param name="arc_weight" type="integer" value="0" label="Arc weight" optional="True" help="two edges, between which the arc's weight is larger than arcWeight, will be linerized" />
+
+      <conditional>
+        <param name="define_multi_kmer" type="select" label="Use multi-kmer?" help="">
+          <option value="true" selected="true">Yes</option>
+          <option value="false">No</option>
+        </param>
+
+        <when value="true">
+      		<param name="max_kmer" type="integer" label="max k when using multi-kmer" optional="True" help="max k when using multi-kmer, and the parameters below are used along with multi-kmer" />
+
+          <param type="data" name="reads_info_file" format="txt" label="Reads info file" optional="True" help="The file contains information of solexa reads(It's necessary when using multi-kmer)"/>
+
+      		<param name="merge_bubble" type="boolean" label="Merge clean bubble" truevalue="-E" falsevalue="" optional="True" help="Merge clean bubble before iterate, works only if -M is set when using multi-kmer" />
+        </when>
+
+        <when value="false"/>
+      </conditional>
+    </inputs>
+
+    <outputs>
+  		<data format="txt" name="contigs" label="${tool.name} on ${on_string}: Contigs" from_work_dir="${input1}.contig"/>
+  		<data format="txt" name="arcs" label="${tool.name} on ${on_string}: Arcs"  from_work_dir="${input1}.Arc"/>
+  		<data format="txt" name="edges" label="${tool.name} on ${on_string}: Updated Edges" from_work_dir="${input1}.updated.edge" />
+  		<data format="txt" name="contigindex" label="${tool.name} on ${on_string}: Contig Index" from_work_dir="${input1}.ContigIndex" />
+    </outputs>
+
+    <expand macro="help"/>
+    
+    <expand macro="citations"/>
+</tool>
