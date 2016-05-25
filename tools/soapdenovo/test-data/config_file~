@@ -1,0 +1,6 @@
+max_rd_len=100
+[LIB]
+avg_ins=259
+asm_flags=1
+q1=/home/pauline/soapdenovo_wrapper/galaxy_tools_clermont_ferrand/tools/soapdenovo/test-data/read_1.fq
+q2=/home/pauline/soapdenovo_wrapper/galaxy_tools_clermont_ferrand/tools/soapdenovo/test-data/read_2.fq
