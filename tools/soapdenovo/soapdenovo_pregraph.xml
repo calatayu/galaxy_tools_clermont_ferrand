@@ -11,12 +11,12 @@
     
     <command><![CDATA[
     	#if $max_kmer_size == "63"
-            SOAPdenovo-63mer scaff
+            SOAPdenovo-63mer pregraph
         #else
-            SOAPdenovo-127mer scaff
+            SOAPdenovo-127mer pregraph
         #end if
         
-  			-K "$kmer" 
+  			-K $kmer 
   			-o pregraph
     ]]></command>
     
